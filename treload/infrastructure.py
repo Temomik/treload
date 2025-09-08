@@ -40,7 +40,7 @@ def apply(module):
 
     # Update in-place what we can
     for name in oldnames & newnames:
-        isChangesFound |= updateScope(modns[name], newNamespace[name], name)
+        isChangesFound |= updateScope(modns[name], newNamespace[name], name, modns)
 
     isChangesFound |= processCallback(modns, newNamespace)
 

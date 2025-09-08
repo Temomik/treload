@@ -14,11 +14,17 @@ def check(old, new, name):
     return False
 
 
-def update(old, new, name):
-    return
-    # TODO fix that it's not working
+def update(old, new, name, namespace):
+    result = True
+    try:
+        namespace[name] = new
+        logTrace('Updated builtin:', name, 'to', new)
+    except:
+        result = False
+    try:
+        setattr(namespace, name, new)
+        logTrace('Updated builtin:', name, 'to', new)
+    except:
+        result = False
 
-    if namespace[name] == newValue:
-        return
-    namespace[name] = newValue
-    logTrace('Updated builtin:', name, 'to', id(newValue))
+    return result

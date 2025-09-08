@@ -8,7 +8,7 @@ def check(old, new, name):
     return isinstance(new, types.FunctionType)
 
 
-def update(old, new, name):
+def update(old, new, name, namespace):
     """Update a function object."""
     isChangesFound = False
 
@@ -58,6 +58,6 @@ def update(old, new, name):
         return isChangesFound
 
     for old_cell, new_cell in zip(old_closure, new_closure):
-        isChangesFound |= updateScope(old_cell.cell_contents, new_cell.cell_contents, name)
+        isChangesFound |= updateScope(old_cell.cell_contents, new_cell.cell_contents, name, old_cell)
 
     return isChangesFound

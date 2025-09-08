@@ -1,6 +1,4 @@
-import types
-
-from treload.type_reloaders import (function, method, classmethod_,
+from treload.type_reloaders import (function, method, classmethod_, property_,
                                     staticmethod_, class_, builtin_)
 
 TYPE_RELOADER_ITEMS = [
@@ -10,4 +8,5 @@ TYPE_RELOADER_ITEMS = [
     staticmethod_,
     class_,
     builtin_,
+    property_,
 ]

@@ -54,10 +54,10 @@ def extraOverride(func):
 def processCallback(old, new):
     CALLBACK_NAME = '__treload__'
 
-    if isinstance(new, dict):
-        callback = new.get(CALLBACK_NAME)
+    if isinstance(old, dict):
+        callback = old.get(CALLBACK_NAME)
     else:
-        callback = getattr(new, CALLBACK_NAME, None)
+        callback = getattr(old, CALLBACK_NAME, None)
     if callable(callback):
         callback = partial(callback, old, new)
         g_scopeData.endReloadQuery.append(callback)
@@ -69,7 +69,7 @@ def processCallback(old, new):
 # TODO add better msg?
 # logError('Exception found when updating %s. Proceeding for other items.' % (name,))
 @noExcept
-def updateScope(old, new, name):
+def updateScope(old, new, name, namespace):
     """
     Update old, if possible in place, with new.
     If old is immutable, this simply returns new.
@@ -90,7 +90,7 @@ def updateScope(old, new, name):
     for reloader in TYPE_RELOADER_ITEMS:
         if not reloader.check(old, new, name):
             continue
-        isChangesFound |= reloader.update(old, new, name)
+        isChangesFound |= reloader.update(old, new, name, namespace)
 
     return isChangesFound
 

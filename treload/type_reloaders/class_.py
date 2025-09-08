@@ -10,7 +10,7 @@ def check(old, new, name):
             getattr(new, '__metaclass__', 1) == getattr(new, '__class__', -1))
 
 
-def update(old, new, name):
+def update(old, new, name, namespace):
     """Update a class object."""
 
     isChangesFound = False
@@ -32,7 +32,7 @@ def update(old, new, name):
         isChangesFound = True
 
     for name in (oldnames & newnames) - set(['__dict__', '__doc__']):
-        isChangesFound |= updateScope(olddict[name], newdict[name], name)
+        isChangesFound |= updateScope(olddict[name], newdict[name], name, old)
 
     oldBases = getattr(old, '__bases__', None)
     newBases = getattr(new, '__bases__', None)

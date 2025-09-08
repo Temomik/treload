@@ -1,3 +1,6 @@
+from treload.logger import logError
+
+
 class ScopeData(object):
 
     def __init__(self):
@@ -7,7 +10,10 @@ class ScopeData(object):
 
     def collect(self):
         for item in self.endReloadQuery:
-            item()
+            try:
+                item()
+            except Exception as e:
+                logError(str(e), str(item.args))
 
         self.__reset()
 
