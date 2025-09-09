@@ -2,7 +2,7 @@ import os
 
 from treload.logger import logTrace
 from treload.scope_data import g_scopeData
-from treload.utils import Exec, resolvePkgPaths, getCodeObject, noExcept, processCallback, updateScope
+from treload.utils.utils import Exec, resolvePkgPaths, getCodeObject, noExcept, processCallback, updateScope
 
 
 @noExcept
@@ -42,7 +42,7 @@ def apply(module):
     for name in oldnames & newnames:
         isChangesFound |= updateScope(modns[name], newNamespace[name], name, modns)
 
-    isChangesFound |= processCallback(modns, newNamespace)
+    isChangesFound |= processCallback(modns)
 
     g_scopeData.collect()
 

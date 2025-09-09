@@ -1,4 +1,5 @@
 from treload.logger import logTrace
+from treload.utils.utils import setAttr
 
 
 def check(old, new, name):
@@ -17,12 +18,7 @@ def check(old, new, name):
 def update(old, new, name, namespace):
     result = True
     try:
-        namespace[name] = new
-        logTrace('Updated builtin:', name, 'to', new)
-    except:
-        result = False
-    try:
-        setattr(namespace, name, new)
+        setAttr(namespace, name, new)
         logTrace('Updated builtin:', name, 'to', new)
     except:
         result = False

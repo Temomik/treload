@@ -1,7 +1,7 @@
 import types
 
 from treload.logger import logTrace, logError
-from treload.utils import codeObjectsEqual, codeObjectsMonkeypatched, updateScope
+from treload.utils.utils import codeObjectsEqual, codeObjectsMonkeypatched, updateScope
 
 
 def check(old, new, name):

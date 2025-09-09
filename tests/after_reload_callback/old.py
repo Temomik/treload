@@ -11,3 +11,8 @@ class ClsCallback(object):
 
 class StaticCallback(object):
     CONSTANT = False
+
+
+class Proxy(object):
+    class Inner(object):
+        CALLBACK = False

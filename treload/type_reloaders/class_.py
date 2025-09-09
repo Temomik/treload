@@ -1,6 +1,6 @@
 import types
 
-from treload.utils import updateScope, processCallback
+from treload.utils.utils import updateScope, processCallback
 from treload.logger import logTrace, logError
 
 
@@ -39,6 +39,6 @@ def update(old, new, name, namespace):
     if str(oldBases) != str(newBases):
         logError('Changing the hierarchy of a class is not supported. %s may be inconsistent.' % (old,))
 
-    isChangesFound |= processCallback(old, new)
+    isChangesFound |= processCallback(old)
 
     return isChangesFound

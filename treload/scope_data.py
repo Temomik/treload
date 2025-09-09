@@ -1,4 +1,5 @@
 from treload.logger import logError
+from treload.utils.attr_accessor import attrAccessor
 
 
 class ScopeData(object):
@@ -9,11 +10,11 @@ class ScopeData(object):
         self.endReloadQuery = list()
 
     def collect(self):
-        for item in self.endReloadQuery:
+        for callback, namespace in self.endReloadQuery:
             try:
-                item()
+                callback(attrAccessor(namespace))
             except Exception as e:
-                logError(str(e), str(item.args))
+                logError(str(e), str(callback))
 
         self.__reset()
 

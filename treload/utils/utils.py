@@ -12,7 +12,6 @@ with warnings.catch_warnings():
     import imp  # TODO generic method for different python versions
 
 from treload.logger import logError, logTrace
-from treload.scope_data import g_scopeData
 
 try:
     IS_PY38_OR_GREATER = sys.version_info >= (3, 8)
@@ -51,19 +50,28 @@ def extraOverride(func):
     return wrapper
 
 
-def processCallback(old, new):
-    CALLBACK_NAME = '__treload__'
+def processCallback(namespace):
+    from treload.scope_data import g_scopeData
 
-    if isinstance(old, dict):
-        callback = old.get(CALLBACK_NAME)
-    else:
-        callback = getattr(old, CALLBACK_NAME, None)
-    if callable(callback):
-        callback = partial(callback, old, new)
-        g_scopeData.endReloadQuery.append(callback)
+    callback = getAttr(namespace, '__treload__')
+    if not callable(callback):
+        return False
+
+    g_scopeData.endReloadQuery.append((callback, namespace))
+    return True
+
+
+def getAttr(namespace, name, default=None):
+    if isinstance(namespace, dict):
+        return namespace.get(name, default)
+    return getattr(namespace, name, default)
+
+
+def setAttr(namespace, name, value):
+    if isinstance(namespace, dict):
+        namespace[name] = value
         return True
-
-    return False
+    setattr(namespace, name, value)
 
 
 # TODO add better msg?

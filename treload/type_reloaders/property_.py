@@ -1,7 +1,3 @@
-from treload.logger import logTrace
-from treload.utils import codeObjectsEqual
-
-
 def check(old, new, name):
     return isinstance(new, property)
 

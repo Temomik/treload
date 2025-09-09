@@ -1,6 +1,6 @@
 import types
 
-from treload.utils import updateScope
+from treload.utils.utils import updateScope
 
 
 def check(old, new, name):
