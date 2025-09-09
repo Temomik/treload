@@ -1,4 +1,5 @@
 from treload.infrastructure import apply
+from treload.utils.utils import init, fini
 
 
 def reload(mod):
@@ -9,4 +10,8 @@ def reload(mod):
     Returns a boolean indicating whether a change was done.
     """
     # pydevd_dont_trace.clear_trace_filter_cache()
-    return apply(mod)
+    init()
+    result = apply(mod)
+    fini()
+
+    return result

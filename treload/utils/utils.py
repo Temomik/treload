@@ -148,3 +148,13 @@ def getCodeObject(modname, paths):
             return compile(source, filePath, "exec")
 
     return None
+
+
+@extraOverride
+def init():
+    pass
+
+
+@extraOverride
+def fini():
+    pass
