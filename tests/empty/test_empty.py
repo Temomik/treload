@@ -1,6 +1,6 @@
-from tests.empty import old
+from old import mod
 from treload import reload
 
 
 def test_passing():
-    assert not reload(old)
+    assert not reload(mod)

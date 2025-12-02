@@ -7,11 +7,10 @@ from treload.utils.utils import Exec, resolvePkgPaths, getCodeObject, noExcept, 
 
 @noExcept
 def apply(module):
-    # TODO add callbacks
     isChangesFound = False
 
-    modName = module.__name__  # Get the module name, e.g. 'foo.bar.whatever'
-    pkgName = os.path.dirname(module.__file__)
+    pkgName, fileName = os.path.split(module.__file__)
+    modName, _ = os.path.splitext(fileName)
     modns = module.__dict__  # Get the module namespace (dict) early; this is part of the type check
 
     paths = resolvePkgPaths(pkgName)
@@ -24,8 +23,11 @@ def apply(module):
     # attribute of methods and functions is set to the correct dict
     # object.
     newNamespace = modns.copy()
-    newNamespace.clear()
-    newNamespace["__name__"] = modns["__name__"]
+
+    # TODO consider that clear is redundant. old properties will be updated and that ok?
+    # newNamespace.clear()
+    # newNamespace["__name__"] = modns["__name__"]
+
     Exec(code, newNamespace)
     # Now we get to the hard part
     oldnames = set(modns)

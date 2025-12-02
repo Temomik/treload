@@ -1,8 +1,13 @@
+import os
+
 import tests
 
+_OLD = os.path.sep + 'old'
+_NEW = os.path.sep + 'new'
 
 def getCodeObject(baseFunc, modName, paths):
-    return baseFunc('new', paths)
+    paths = [path.replace(_OLD, _NEW) for path in paths if paths]
+    return baseFunc(modName, paths)
 
 
 def resolvePkgPaths(baseFunc, pkgName):

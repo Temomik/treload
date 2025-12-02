@@ -1,18 +1,18 @@
-from tests.after_reload_callback import old
+from old import mod
 from treload import reload
 
 
 def test_passing():
-    assert not old.CONSTANT
-    assert not old.FuncCallback.CONSTANT
-    assert not old.ClsCallback.CONSTANT
-    assert not old.StaticCallback.CONSTANT
-    assert not old.Proxy.Inner.CALLBACK
+    assert not mod.CONSTANT
+    assert not mod.FuncCallback.CONSTANT
+    assert not mod.ClsCallback.CONSTANT
+    assert not mod.StaticCallback.CONSTANT
+    assert not mod.Proxy.Inner.CALLBACK
 
-    assert reload(old)
+    assert reload(mod)
 
-    assert old.CONSTANT
-    assert not old.FuncCallback.CONSTANT  # bound methods not supported
-    assert old.ClsCallback.CONSTANT
-    assert old.StaticCallback.CONSTANT
-    assert not old.Proxy.Inner.CALLBACK  # TODO support callbacks in closures
+    assert mod.CONSTANT
+    assert not mod.FuncCallback.CONSTANT  # bound methods not supported
+    assert mod.ClsCallback.CONSTANT
+    assert mod.StaticCallback.CONSTANT
+    assert not mod.Proxy.Inner.CALLBACK  # TODO support callbacks in closures

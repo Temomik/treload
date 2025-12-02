@@ -1,13 +1,13 @@
-from tests.decorator import old
+from old import mod
 from treload import reload
 
 
 def test_passing():
-    assert not old.overrideFunc()
-    assert not old.proxyFunc()
+    assert not mod.overrideFunc()
+    assert not mod.proxyFunc()
 
-    assert reload(old)
+    assert reload(mod)
 
-    assert old.proxyFunc()
-    assert not old.overrideFunc()  # TODO already decorated function can reloaded partialy
-    assert old.newFunc()  # function decorated after reload is supported
+    assert mod.proxyFunc()
+    assert not mod.overrideFunc()  # TODO already decorated function can reloaded partialy
+    assert mod.newFunc()  # function decorated after reload is supported

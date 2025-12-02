@@ -1,21 +1,21 @@
-from tests.closures import old
+from old import mod
 from treload import reload
 
 
 def test_passing():
-    oldInstance = old.TestCls()
+    oldInstance = mod.TestCls()
 
-    assert not old.func()
+    assert not mod.func()
     assert not oldInstance.method()
     assert not oldInstance.staticMethod()
     assert not oldInstance.classMethod()
 
-    assert reload(old)
+    assert reload(mod)
 
-    assert old.func(), 'failed to reload module closure'
-    # assert old.TestCls().method(), 'failed to reload method closure'
+    assert mod.func(), 'failed to reload module closure'
+    # assert mod.TestCls().method(), 'failed to reload method closure'
     assert oldInstance.staticMethod(), 'failed to reload static method closure'
     assert oldInstance.classMethod(), 'failed to reload class method closure'
 
-    assert old.TestCls().staticMethod(), 'failed to reload static method closure'
-    assert old.TestCls().classMethod(), 'failed to reload class method closure'
+    assert mod.TestCls().staticMethod(), 'failed to reload static method closure'
+    assert mod.TestCls().classMethod(), 'failed to reload class method closure'

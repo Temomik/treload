@@ -1,4 +1,4 @@
-import decorator
+from old import decorator
 
 from treload import reload
 
@@ -6,12 +6,12 @@ from treload import reload
 def test_passing():
     assert decorator.LINKS_COUNT == 0
 
-    from tests.init_fini_example import old
-    assert not old.func()
+    from old import mod
+    assert not mod.func()
     assert decorator.LINKS_COUNT == 1
 
-    assert reload(old)
-    assert old.func()
+    assert reload(mod)
+    assert mod.func()
     assert decorator.LINKS_COUNT == 1
 
     decorator.decorator(lambda: None)

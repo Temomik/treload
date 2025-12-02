@@ -1,4 +1,4 @@
-from tests.inheritance_override.base import Base
+from tests.inheritance_override.old.base import Base
 
 
 class Child(Base):
