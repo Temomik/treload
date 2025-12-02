@@ -1,4 +1,5 @@
 from treload.infrastructure import apply
+from treload.logger import logTrace
 from treload.utils.utils import init, fini
 
 
@@ -13,5 +14,7 @@ def reload(mod):
     init()
     result = apply(mod)
     fini()
+
+    logTrace('treload completed with state - ', result)
 
     return result

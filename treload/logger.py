@@ -8,7 +8,7 @@ class LEVEL(object):
     INFO = 3
 
 
-_DEBUG = LEVEL.NO_DEBUG
+_DEBUG = LEVEL.TRACE
 
 
 def write(*args):
