@@ -15,6 +15,15 @@ def override(result):
     return proxy
 
 
+def noneProxy(func):
+    func.__globals__["treload_decorator_" + func.__name__] = func
+
+    def wrapper():
+        return True
+
+    return wrapper
+
+
 @proxy
 def proxyFunc():
     return True
@@ -28,3 +37,8 @@ def overrideFunc():
 @override(True)
 def newFunc():
     return False
+
+
+@noneProxy
+def noneFunc():
+    return True

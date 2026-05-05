@@ -5,9 +5,13 @@ from treload import reload
 def test_passing():
     assert not mod.overrideFunc()
     assert not mod.proxyFunc()
+    assert not mod.noneFunc()
+    assert not mod.treload_decorator_noneFunc()
 
     assert reload(mod)
 
     assert mod.proxyFunc()
-    assert not mod.overrideFunc()  # TODO already decorated function can reloaded partialy
-    assert mod.newFunc()  # function decorated after reload is supported
+    assert mod.overrideFunc()
+    assert mod.newFunc()
+    assert mod.noneFunc()
+    assert mod.treload_decorator_noneFunc()

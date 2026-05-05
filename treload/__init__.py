@@ -10,11 +10,8 @@ def reload(mod):
 
     Returns a boolean indicating whether a change was done.
     """
-    # pydevd_dont_trace.clear_trace_filter_cache()
     init()
     result = apply(mod)
     fini()
-
-    logTrace('treload completed with state - ', result)
 
     return result
