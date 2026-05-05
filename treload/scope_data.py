@@ -16,6 +16,9 @@ class ScopeData(object):
         # such as updateScope itself, which is decorated with @noExcept).
         self.updateScopeInProgressIds = set()
 
+        # Class objects already processed during the current reload. Lets us skip
+        self.processedClassIds = set()
+
     def collect(self):
         for callback, namespace in self.endReloadQuery:
             try:
@@ -28,6 +31,7 @@ class ScopeData(object):
     def reset(self):
         self.endReloadQuery = list()
         self.updateScopeInProgressIds = set()
+        self.processedClassIds = set()
 
 
 g_scopeData = ScopeData()

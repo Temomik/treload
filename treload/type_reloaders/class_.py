@@ -1,5 +1,6 @@
 import types
 
+from treload.scope_data import g_scopeData
 from treload.utils.utils import updateScope, processCallback
 from treload.logger import logTrace, logError
 
@@ -83,6 +84,12 @@ def check(old, new, name):
 
 def update(old, new, name, namespace):
     """Update a class object."""
+
+    classKey = id(old)
+    if classKey in g_scopeData.processedClassIds:
+        logTrace('Class already processed in this reload... Skipping.', name)
+        return False
+    g_scopeData.processedClassIds.add(classKey)
 
     isChangesFound = False
     olddict = old.__dict__
