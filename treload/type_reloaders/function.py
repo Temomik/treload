@@ -35,12 +35,23 @@ def _canReplaceBoundFunction(namespace):
     return type(namespace).__name__ != 'cell'
 
 
+def _globalsModuleName(func):
+    globs = getattr(func, 'func_globals', None) or getattr(func, '__globals__', None)
+    return globs.get('__name__') if isinstance(globs, dict) else None
+
+
 def check(old, new, name):
     return isinstance(new, types.FunctionType)
 
 
 def update(old, new, name, namespace):
     """Update a function object."""
+    if _globalsModuleName(old) != _globalsModuleName(new):
+        # Live function was assigned externally (monkey patch from another module);
+        # reloading the host module must not mutate the patcher's source.
+        logTrace('External monkey-patch detected... Skipping.', name)
+        return False
+
     isChangesFound = False
 
     old.__doc__ = new.__doc__
