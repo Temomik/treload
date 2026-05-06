@@ -10,8 +10,8 @@ _MOD_NAME = 'treload_tests_ref_single_mod'
 
 
 def updateCachedRef_function():
-    setattr(mod, '_treload_ref_foo', mod.foo)
-    setattr(mod, '_treload_ref_fooDeleted', mod.fooDeleted)
+    setattr(mod, '_treload_ref_foo', mod.__dict__['foo'])
+    setattr(mod, '_treload_ref_fooDeleted', mod.__dict__['fooDeleted'])
     mod.foo = foreignModuleLevel
     mod.fooDeleted = foreignModuleLevel
 
