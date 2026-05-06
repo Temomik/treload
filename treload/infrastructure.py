@@ -3,8 +3,8 @@ import os
 from treload.logger import logTrace, logError
 from treload.scope_data import g_scopeData
 from treload.utils.constants import MODULE_METADATA_KEYS
-from treload.utils.utils import (Exec, resolvePkgPaths, getCodeObject, processCallback, updateScope,
-                                 clearTraceFilterCache, updateInternalRefs, noExceptCallback)
+from treload.utils.utils import (Exec, resolvePkgPaths, getCodeObject, processCallback, updateScope, noExceptCallback,
+                                 clearTraceFilterCache, updateInternalRefSingle, updateInternalRefsDict)
 
 
 def onExceptionOccur(_):
@@ -55,7 +55,8 @@ def apply(module):
     for name in oldnames & newnames:
         isChangesFound |= bool(updateScope(modns[name], newNamespace[name], name, modns))
 
-    isChangesFound |= bool(updateInternalRefs(modns, newNamespace))
+    isChangesFound |= bool(updateInternalRefSingle(oldnames - newnames, modns, newNamespace))
+    isChangesFound |= bool(updateInternalRefsDict(modns, newNamespace))
     isChangesFound |= bool(processCallback(modns))
 
     g_scopeData.collect()

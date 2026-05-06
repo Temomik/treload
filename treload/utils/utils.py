@@ -7,7 +7,7 @@ import sys
 
 import warnings
 
-from treload.utils.constants import TRELOAD_REFS_ATTR, SKIP_START_WITH_NAMES, SKIP_UPDATE_NAMES
+from treload.utils.constants import TRELOAD_REFS_ATTR, SKIP_START_WITH_NAMES, SKIP_UPDATE_NAMES, TRELOAD_REF_ATTR_PREFIX
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -195,7 +195,21 @@ def clearTraceFilterCache():
         pass
 
 
-def updateInternalRefs(modns, newNamespace):
+def updateInternalRefSingle(names, modns, newNamespace):
+    isChangesFound = False
+
+    for name in names:
+        if not name.startswith(TRELOAD_REF_ATTR_PREFIX):
+            continue
+
+        origName = name[len(TRELOAD_REF_ATTR_PREFIX):]
+        if origName in newNamespace:
+            isChangesFound |= bool(updateScope(modns[name], newNamespace[origName], origName, None))
+
+    return isChangesFound
+
+
+def updateInternalRefsDict(modns, newNamespace):
     """Update in-place objects registered by the module under a stable key.
 
     Contract:

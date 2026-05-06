@@ -1,7 +1,8 @@
 import types
 
 from treload.scope_data import g_scopeData
-from treload.utils.utils import updateScope, processCallback
+from treload.utils.constants import TRELOAD_REF_ATTR_PREFIX
+from treload.utils.utils import updateScope, processCallback, updateInternalRefSingle
 from treload.logger import logTrace, logError
 
 SKIP_CLASS_ATTRIBUTE_NAMES = {
@@ -109,6 +110,9 @@ def update(old, new, name, namespace):
     for name in oldnames - newnames:
         if name in SKIP_CLASS_ATTRIBUTE_NAMES:
             continue
+        if isinstance(name, str) and name.startswith(TRELOAD_REF_ATTR_PREFIX):
+            logTrace('Skipping remove of treload ref:', name, 'from', old)
+            continue
         if classModuleName and _isForeignPatch(olddict[name], classModuleName):
             logTrace('Skipping remove of foreign patch:', name, 'from', old)
             continue
@@ -118,6 +122,8 @@ def update(old, new, name, namespace):
 
     for name in (oldnames & newnames) - SKIP_CLASS_ATTRIBUTE_NAMES:
         isChangesFound |= updateScope(olddict[name], newdict[name], name, old)
+
+    isChangesFound |= updateInternalRefSingle(oldnames - newnames - SKIP_CLASS_ATTRIBUTE_NAMES, olddict, newdict)
 
     oldBases = getattr(old, '__bases__', None)
     newBases = getattr(new, '__bases__', None)
