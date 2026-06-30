@@ -1,0 +1,9 @@
+FLAG = 'old'
+LIST_VALUE = [1]
+DICT_VALUE = {'a': 1}
+SET_VALUE = set([1])
+TUPLE_VALUE = (1,)
+EMPTY_LIST_VALUE = []
+EMPTY_DICT_VALUE = {}
+EMPTY_SET_VALUE = set()
+EMPTY_TUPLE_VALUE = ()

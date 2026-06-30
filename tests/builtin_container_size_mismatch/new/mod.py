@@ -1,0 +1,9 @@
+FLAG = 'new'
+LIST_VALUE = []
+DICT_VALUE = {}
+SET_VALUE = set()
+TUPLE_VALUE = ()
+EMPTY_LIST_VALUE = [1]
+EMPTY_DICT_VALUE = {'a': 1}
+EMPTY_SET_VALUE = set([1])
+EMPTY_TUPLE_VALUE = (1,)

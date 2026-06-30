@@ -15,7 +15,15 @@ def check(old, new, name):
     return False
 
 
+def _isContainer(value):
+    return type(value) in (dict, tuple, list, set)
+
+
 def update(old, new, name, namespace):
+    if _isContainer(old) and _isContainer(new) and len(old) > 0 and len(new) == 0:
+        logTrace('Skipped builtin container update to preserve non-empty cache:', name)
+        return False
+
     result = True
     try:
         setAttr(namespace, name, new)
